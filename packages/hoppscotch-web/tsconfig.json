@@ -1,0 +1,24 @@
+// TypeScript 编译器的配置文件，TypeScript 编译器可以根据它的规则来对代码进行编译。
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "jsx": "preserve",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "lib": ["ESNext", "DOM"],
+    "skipLibCheck": true,
+    "noEmit": true,
+    "paths": {
+      "@hoppscotch/common": [ "../hoppscotch-common/src/index.ts" ],
+      "@hoppscotch/common/*": [ "../hoppscotch-common/src/*" ]
+    }
+
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

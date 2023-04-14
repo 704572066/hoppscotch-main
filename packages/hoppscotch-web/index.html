@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hoppscotch - Open source API development ecosystem</title>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" href="/icon.png" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      // Shims to make swagger-parser package work
+      // 在全局作用域中声明的变量、函数都是window对象的属性和方法。
+      // window对象是相对于web浏览器而言的，依赖于浏览器。在一定程度上，window对象，是global的一个子对象。浏览器环境下，global对象指的就是window对象，可以说window对象是global在浏览器中的具体表现。
+      // ECMAScript 虽然没有指出如何直接访问Global 对象，但Web 浏览器都是将这个全局对象作为window 对象的一部分加以实现的。因此，在全局作用域中声明的所有变量和函数，就都成为了window对象的属性。来看下面的例子：
+      // var color = "red";
+      // function sayColor(){
+      // alert(window.color);
+      // }
+      // window.sayColor(); //"red"
+      // 这里定义了一个名为color 的全局变量和一个名为sayColor()的全局函数。在sayColor()内部，我们通过window.color 来访问color 变量，说明全局变量是window 对象的属性。然后又使用window.sayColor()来直接通过window 对象调用这个函数，说明全局作用域中声明的函数是window对象的方法。
+      // window对象是宿主对象也就是在一定的环境中才会生成的对象（这里也就是指浏览器），而global对象是在任何环境中都存在的，window对象具体也就是指浏览器打开的那个窗口。
+      window.global = window
+    </script>
+    <script type="module">
+      import { Buffer } from "buffer"
+      import process from "process"
+
+      // // Shims to make postman-collection work
+      window.Buffer = Buffer
+      window.process = process
+    </script>
+    <!-- 在script标签中写js代码，或者使用src引入js文件时，默认不能使用module形式，即不能使用import导入文件，
+    但是我们可以再script标签上加上type=module属性来改变方式。 -->
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

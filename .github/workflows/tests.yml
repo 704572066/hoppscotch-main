@@ -1,0 +1,37 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: ["lts/*"]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Environment
+        run: mv .env.example .env
+
+      - name: Setup and run pnpm install
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7
+          run_install: true
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
+
+      - name: Run tests
+        run: pnpm test
