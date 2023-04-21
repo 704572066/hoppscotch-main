@@ -119,7 +119,7 @@ const props = defineProps({
     default: "",
   },
 })
-
+// 父组件 v-model 没有指定参数名，则默认是 modelValue
 const emit = defineEmits<{
   (e: "update:modelValue", newTabID: string): void
 }>()

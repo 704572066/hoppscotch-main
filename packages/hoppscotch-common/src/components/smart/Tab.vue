@@ -37,7 +37,7 @@ const tabMeta = computed<TabMeta>(() => ({
   // props.icon can store a component, which should not be made deeply reactive
   icon:
     props.icon && typeof props.icon === "object"
-      ? markRaw(props.icon)
+      ? markRaw(props.icon) // markRaw标记一个对象，使其永远不会转换为代理。返回对象本身。
       : props.icon,
 
   indicator: props.indicator,
@@ -68,7 +68,7 @@ onMounted(() => {
   addTabEntry(props.id, tabMeta.value)
 })
 
-watch(tabMeta, (newMeta) => {
+watch(tabMeta, (newMeta, oldMeta) => {
   updateTabEntry(props.id, newMeta)
 })
 
