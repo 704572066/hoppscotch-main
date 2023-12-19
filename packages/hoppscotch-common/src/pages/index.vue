@@ -121,6 +121,7 @@ function setupRequestSync(
 }
 
 export default defineComponent({
+  // setup 调用时机： 创建组件实例 ，初始化props,紧接着调用setup函数。从生命周期钩子的视角来看，它会在 beforeCreate 钩子之前被调用
   setup() {
     const requestForSync = ref<HoppRESTRequest | null>(null)
 

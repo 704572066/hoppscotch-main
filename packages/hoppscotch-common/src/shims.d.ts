@@ -32,3 +32,6 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+// 在 TypeScript 中导入 JavaScript 包，解决声明文件报错问题
+declare module '~/helpers/oauth'

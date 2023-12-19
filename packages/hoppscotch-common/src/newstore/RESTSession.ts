@@ -617,6 +617,7 @@ export const restActiveHeadersCount$ = restHeaders$.pipe(
   )
 )
 
+//pluck rxjs提取数据流中每个数据的某个字段
 export const restAuth$ = restRequest$.pipe(pluck("auth"))
 
 export const restPreRequestScript$ = restSessionStore.subject$.pipe(

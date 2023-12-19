@@ -56,7 +56,7 @@ export default defineComponent({
   },
 })
 </script>
-
+<!-- 添加自定义块 采用empty layout-->
 <route lang="yaml">
 meta:
   layout: empty

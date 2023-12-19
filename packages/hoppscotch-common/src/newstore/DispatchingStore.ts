@@ -49,7 +49,7 @@ export default class DispatchingStore<
   #dispatches$: Subject<Dispatch<StoreType, DispatchersType>> = new Subject() // 创建了一个新的 subject，然后调用 next 方法，多播给其所有的监听者
 
   constructor(initialValue: StoreType, dispatchers: DispatchersType) {
-    this.#state$ = new BehaviorSubject(initialValue) // BehaviorSubject是subject的变种，BehaviorSubject具有subject的基本功能,BehaviorSubject在初始化的时候需要给一个默认的值
+    this.#state$ = new BehaviorSubject(initialValue) // BehaviorSubject是subject的变种，BehaviorSubject具有subject的基本功能,BehaviorSubject在初始化的时候需要给一个默认的值,它将数据流中的最新值推送给接受者
     this.#dispatchers = dispatchers
 
     this.#dispatches$

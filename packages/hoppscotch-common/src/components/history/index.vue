@@ -250,7 +250,7 @@ const deepCheckForRegex = (value: unknown, regExp: RegExp): boolean => {
 
   return false
 }
-
+//  NonNullable<Type> 会将 null 和 undefined 从 Type 中排除掉，由剩余类型组成一个新的类型。
 const filteredHistory = computed(() =>
   pipe(
     history.value as HistoryEntry[],
@@ -284,6 +284,7 @@ const filters = computed(() => [
   { value: "STARRED" as const, label: t("filter.starred") },
 ])
 
+// 借助 typeof ArrayInstance[number] 从常量值数组中获取对应元素字面量类型 
 type FilterMode = typeof filters["value"][number]["value"]
 
 const filterSelection = ref<FilterMode>("ALL")

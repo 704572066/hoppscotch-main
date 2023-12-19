@@ -67,7 +67,7 @@ const shouldRender = computed(() => {
 onMounted(() => {
   addTabEntry(props.id, tabMeta.value)
 })
-
+// 用户登录登出时会改变团队集合与team environments的tabMeta的值
 watch(tabMeta, (newMeta, oldMeta) => {
   updateTabEntry(props.id, newMeta)
 })

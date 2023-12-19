@@ -206,6 +206,7 @@ export const resolvesEnvsInBody = (
   }
 }
 
+// 替换环境变量
 function getFinalBodyFromRequest(
   request: HoppRESTRequest,
   envVariables: Environment["variables"]
