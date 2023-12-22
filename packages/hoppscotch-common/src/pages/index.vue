@@ -70,12 +70,15 @@ function oAuthURL() {
     { authType: "none", authActive: true },
     setRESTAuth
   )
-
+  // as 类型断言只能够欺骗TypeScript 编译器，无法避免运行时的错误; 类型断言不是类型转换，它不会真的影响到变量的类型
   const oauth2Token = pluckRef(auth as Ref<HoppRESTAuthOAuth2>, "token")
 
+  // 点击Generate token 会重定向url，导致刷新页面，触发onBeforeMount注册的函数，将拿到的access_token更新到页面上
   onBeforeMount(async () => {
     try {
       const tokenInfo = await oauthRedirect()
+      // 因为 javascript 没有将hasOwnProperty作为一个敏感词，所以我们很有可能将对象的一个属性命名为hasOwnProperty，这样一来就无法再使用对象原型的 hasOwnProperty 方法来判断属性是否是来自原型链。
+      // 需要使用Object.prototype.hasOwnProperty.call
       if (Object.prototype.hasOwnProperty.call(tokenInfo, "access_token")) {
         if (typeof tokenInfo === "object") {
           oauth2Token.value = tokenInfo.access_token
@@ -104,6 +107,7 @@ function setupRequestSync(
     ) {
       const request = await loadRequestFromSync()
       if (request) {
+        // getRESTRequest() 拿到的是url最新的值，输入框中的url地址发生变化会触发#dispatches$发送数据，进一步触发#state$发送数据
         if (!isEqualHoppRESTRequest(request, getRESTRequest())) {
           requestForSync.value = request
           confirmSync.value = true
@@ -159,8 +163,11 @@ export default defineComponent({
       )
     }
 
+    //设置request同步逻辑，如果登录后和登录前的request不同，提示是否restore登录后的request
     setupRequestSync(confirmSync, requestForSync)
+    //http://localhost:3000/?url=https://www.baidu.com 如果浏览器地址中有带参数，那么会将参数绑定到request
     bindRequestToURLParams()
+    //浏览器地址中有带oauth 重定向的，会更新authorization tab 中的oauth2.0的token值
     oAuthURL()
 
     return {

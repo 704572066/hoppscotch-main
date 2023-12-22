@@ -204,6 +204,7 @@ const tokenRequest = async ({
 
 const oauthRedirect = () => {
   let tokenResponse = ""
+  // window.location.search.substring(1) 得到了当前url链接的中?号后的参数
   const q = parseQueryString(window.location.search.substring(1))
   // Check if the server returned an error string
   if (q.error) {
