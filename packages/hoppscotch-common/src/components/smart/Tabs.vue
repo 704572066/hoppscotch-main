@@ -161,7 +161,8 @@ const removeTabEntry = (tabID: string) => {
   if (props.modelValue === tabID)
     if (tabEntries.value.length > 0) selectTab(tabEntries.value[0][0])
 }
-
+// provide / inject 是vue 2.2.0 版本增加的方法，这对选项需要一起使用,
+// 允许一个祖先组件向其所有子孙后代注入一个依赖，不论组件层次有多深
 provide<TabProvider>("tabs-system", {
   renderInactive: computed(() => props.renderInactiveTabs),
   activeTabID: computed(() => props.modelValue),

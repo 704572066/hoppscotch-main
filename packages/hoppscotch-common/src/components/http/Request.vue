@@ -305,7 +305,7 @@ const loading = ref(false)
 const showCurlImportModal = ref(false)
 const showCodegenModal = ref(false)
 const showSaveRequestModal = ref(false)
-
+// 判断浏览器是否支持分享功能，由于 window 对象是一个全局对象，因此在使用window.navigator时可以省略 window 前缀
 const hasNavigatorShare = !!navigator.share
 
 // Template refs
@@ -379,6 +379,7 @@ const ensureMethodInEndpoint = () => {
     !newEndpoint.value.startsWith("<<")
   ) {
     const domain = newEndpoint.value.split(/[/:#?]+/)[0]
+    // localhost或者ip地址
     if (domain === "localhost" || /([0-9]+\.)*[0-9]/.test(domain)) {
       setRESTEndpoint("http://" + newEndpoint.value)
     } else {
@@ -387,6 +388,7 @@ const ensureMethodInEndpoint = () => {
   }
 }
 
+// 判断粘贴的地址是否是crul命令格式
 const onPasteUrl = (e: { pastedValue: string; prevValue: string }) => {
   if (!e) return
 
@@ -420,6 +422,10 @@ const clearContent = () => {
   resetRESTRequest()
 }
 
+/* Using the refAutoReset composable, you can create refs that automatically reset to 
+a default value after a period of inactivity, which can be useful in cases where you 
+want to prevent stale data from being displayed or to reset form inputs after 
+a certain amount of time has passed. */
 const copyLinkIcon = refAutoReset<
   typeof IconShare2 | typeof IconCopy | typeof IconCheck
 >(hasNavigatorShare ? IconShare2 : IconCopy, 1000)
@@ -563,7 +569,7 @@ const saveRequest = () => {
     }
   }
 }
-
+// 快捷键绑定
 defineActionHandler("request.send-cancel", () => {
   if (!loading.value) newSendRequest()
   else cancelRequest()

@@ -1,7 +1,10 @@
 /// <reference types="vite/client" />
 /// <reference types="vite-plugin-pages/client" />
 /// <reference types="unplugin-icons/types/vue" />
-
+// 将 shims.d.ts 文件变成模块
+// 使用 export {} 行将其标记为外部模块。 
+// 模块是一个包含至少 1 个导入或导出语句的文件，因此我们需要这样做才能扩大全局范围。
+export {}
 // // Hoppscotch Browser Extension
 interface PWExtensionHook {
   getVersion: () => { major: number; minor: number }

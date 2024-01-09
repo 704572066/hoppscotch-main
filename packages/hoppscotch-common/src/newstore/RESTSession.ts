@@ -49,7 +49,17 @@ const defaultRESTSession: RESTSession = {
   testResults: null,
   saveContext: null,
 }
-
+// ES6中，当对象中的key：value键值对，如果value是个变量/函数，此时省略key，key的值就是变量名/函数名。
+/* 
+var a = 1;
+var obj = {
+  a,
+  fn(){
+    console.log(1)
+  }
+obj;
+//{a:1,fn:fn(){console.log(1)}} 
+*/
 const dispatchers = defineDispatchers({
   setRequest(_: RESTSession, { req }: { req: HoppRESTRequest }) {
     return {

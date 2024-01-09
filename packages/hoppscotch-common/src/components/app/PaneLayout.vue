@@ -51,7 +51,7 @@ import { useSetting } from "@composables/settings"
 import { setLocalConfig, getLocalConfig } from "~/newstore/localpersistence"
 
 const SIDEBAR_ON_LEFT = useSetting("SIDEBAR_ON_LEFT")
-
+// useBreakpoints 根据当前屏幕大小来设置不同的样式
 const breakpoints = useBreakpoints(breakpointsTailwind)
 const mdAndLarger = breakpoints.greater("md")
 
@@ -60,9 +60,11 @@ const COLUMN_LAYOUT = useSetting("COLUMN_LAYOUT")
 const SIDEBAR = useSetting("SIDEBAR")
 
 const slots = useSlots()
-
+// computed属性可以接收一个计算函数，并在计算函数中使用其他响应式数据的值进行计算。
+// 当任何一个参与计算的响应式数据发生变化时，computed属性会自动重新计算其值，并触发相应的依赖更新。
 const hasSidebar = computed(() => !!slots.sidebar)
-
+// defineProps是Vue3中的一种新的组件数据传递方式，可以用于在子组件中定义接收哪些父组件的props。
+// 当父组件的props发生变化时，子组件也会随之响应。
 const props = defineProps({
   layoutId: {
     type: String,

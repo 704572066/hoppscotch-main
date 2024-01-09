@@ -115,7 +115,8 @@ export function createRESTNetworkRequestStream(
     type: "loading",
     req: request,
   })
-
+  // 使用 Do符号:fp-ts公开了一个“do”语法，可以用 chain 缓解过度嵌套。
+  // 尤其是当您需要捕获大量稍后在程序流的不同部分中重用的值时。
   pipe(
     TE.Do,
 
@@ -123,6 +124,17 @@ export function createRESTNetworkRequestStream(
     TE.bind("req", () => TE.of(cloneDeep(request))),
 
     // Assembling headers object
+    // 在 TypeScript 中，可以使用数组的 reduce 方法将数组中的元素逐个处理，并将处理后的结果累加到一个最终值中
+    /*     
+    const str: string = "pidancode.com";
+    const result: string = str.split("")
+      .reduce((acc: string, char: string) => {
+        return acc + char.toUpperCase();
+      }, "");
+    console.log(result);
+    // 输出 PIDADNCODE.COM
+    在上述代码中，我们首先使用字符串的 split 方法将字符串拆分成一个字符数组，然后使用 reduce 方法将数组中的所有字符转换成大写字母，并将它们拼接成一个新的字符串。 
+    */
     TE.bind("headers", ({ req }) =>
       TE.of(
         req.effectiveFinalHeaders.reduce((acc, { key, value }) => {
@@ -132,6 +144,11 @@ export function createRESTNetworkRequestStream(
     ),
 
     // Assembling params object
+    // URLSearchParams 对象专门用于处理url网址信息中的查询字符串，在网址字符串中通常都是 ? 问号之后的内容(不包含问号)。
+    /* 
+    const urlSearchParams = new URLSearchParams('wd=中国&city=上海')
+    urlSearchParams.get('city') // 输出：'上海' 
+    */
     TE.bind("params", ({ req }) => {
       const params = new URLSearchParams()
       req.effectiveFinalParams.forEach((x) => {
@@ -158,6 +175,11 @@ export function createRESTNetworkRequestStream(
     TE.bind("backupTimeEnd", () => TE.of(Date.now())),
 
     // Assemble the final response object
+    /* 
+    What a W suffix means, e.g. chainW or chainEitherKW
+    W means Widen. Functions that end with W are able to aggregate errors into a union (for Either based data types) 
+    or environments into an intersection (for Reader based data types). 
+    */
     TE.chainW(({ req, res, backupTimeEnd, backupTimeStart }) =>
       processResponse(res, req, backupTimeStart, backupTimeEnd, "success")
     ),

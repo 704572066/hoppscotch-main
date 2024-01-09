@@ -145,7 +145,11 @@ export function useStreamSubscriber(): {
   subscribeToStream: StreamSubscriberFunc
 } {
   const subs: Subscription[] = []
-
+  /* 
+  Since you observable calls observer.complete() and you are certain that it will complete in case of success or failure then the answer is no, there's no need to unsubscribe. 
+  It completes on it's own, which means it unsubscribes all subscribers automatically.
+  If you are not sure that that third party library you are using will proceed to the observer.complete() line, then you must unsubscribe in case of failure.
+   */
   const runAndSubscribe = <T>(
     stream: Observable<T>,
     next?: (value: T) => void,
