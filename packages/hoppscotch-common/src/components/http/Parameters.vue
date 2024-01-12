@@ -265,6 +265,9 @@ watch(
     const filteredWorkingParams: HoppRESTParam[] = pipe(
       workingParams.value,
       A.filterMap(
+        // flow与pipe类似，区别在于pipe第一个参数是传入的值，而flow的初始化参数是一组函数，再调用时传入数值
+        // pipe(1, flow(add10, double, toString))
+        // flow(add10, double, toString)(1) 两者相等
         flow(
           O.fromPredicate((e) => e.key !== ""),
           O.map(objRemoveKey("id"))
