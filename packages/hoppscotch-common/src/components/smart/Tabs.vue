@@ -120,6 +120,7 @@ const props = defineProps({
   },
 })
 // 父组件 v-model 没有指定参数名，则默认是 modelValue
+// 在父组件中使用v-model时，可以通过v-model:propName绑定子组件的modelValue prop和update:modelValue event
 const emit = defineEmits<{
   (e: "update:modelValue", newTabID: string): void
 }>()

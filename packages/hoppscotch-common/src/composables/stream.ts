@@ -27,7 +27,7 @@ export function useReadonlyStream<T>(
 
   const r = customRef((track, trigger) => {
     let val = initialValue
-
+    // TeamListAdapter.ts 中的代码有定时任务会定时发送给订阅者
     sub = stream$.subscribe((value) => {
       if (cloneMode === "noclone") {
         val = value

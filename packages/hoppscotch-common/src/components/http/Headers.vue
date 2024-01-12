@@ -187,11 +187,13 @@
                 :icon="masking ? IconEye : IconEyeOff"
                 @click="toggleMask()"
               />
-              <ButtonSecondary
+              <!-- <ButtonSecondary
                 v-else
                 :icon="IconArrowUpRight"
                 class="cursor-auto text-primary hover:text-primary"
-              />
+              /> -->
+              <!-- 参考github最新代码 -->
+              <div v-else class="aspect-square w-8"></div>
             </span>
             <span>
               <ButtonSecondary
@@ -287,11 +289,11 @@ const bulkEditor = ref<any | null>(null)
 const linewrapEnabled = ref(true)
 
 const deletionToast = ref<{ goAway: (delay: number) => void } | null>(null)
-
+// 利用defineEmits方法返回函数触发自定义事件
 const emit = defineEmits<{
   (e: "change-tab", value: RequestOptionTabs): void
 }>()
-
+// 通过codemirror实现了编辑器，通过bulkMode进行切换
 useCodemirror(
   bulkEditor,
   bulkHeaders,
@@ -323,6 +325,12 @@ const workingHeaders = ref<Array<HoppRESTHeader & { id: number }>>([
 ])
 
 // Rule: Working Headers always have last element is always an empty header
+/* 监听数组，需要使用 watch(() => [...arr], (newValue,oldValue) => {  ...  }) 的方式
+添加和删除数据可以正常获得newValue,oldValue的值
+对于对象数组，需要添加 {deep:true} 参数才能正常监听 
+对workingHeaders数组进行push操作这里不会触发监听
+Vue3可以使用watchDeep：监听对象和数组的深层次变化
+*/
 watch(workingHeaders, (headersList) => {
   if (
     headersList.length > 0 &&
@@ -459,7 +467,7 @@ const deleteHeader = (index: number) => {
       },
     })
   }
-
+  //delete的时候这里对workingHeaders.value进行的赋值，整个内存地址发生了变化，所以会触发watch
   workingHeaders.value = pipe(
     workingHeaders.value,
     A.deleteAt(index),
@@ -483,7 +491,7 @@ const clearContent = () => {
 
 const restRequest = useReadonlyStream(restRequest$, getRESTRequest())
 const aggregateEnvs = useReadonlyStream(aggregateEnvs$, getAggregateEnvs())
-
+// computedHeaders是来自auth或者body tab页生成的header，不是通过header页直接添加的
 const computedHeaders = computed(() =>
   getComputedHeaders(restRequest.value, aggregateEnvs.value).map(
     (header, index) => ({

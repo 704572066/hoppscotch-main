@@ -314,6 +314,7 @@ export type AggregateEnvironment = {
  * the current state (Global + The Selected Environment).
  * NOTE: The source environment attribute will be "Global" for Global Env as source.
  */
+// 当source1$ 和source2$ 都产生一个数据时，combineLatest就开始将二者最新的数据进行合并
 export const aggregateEnvs$: Observable<AggregateEnvironment[]> = combineLatest(
   [currentEnvironment$, globalEnv$]
 ).pipe(
