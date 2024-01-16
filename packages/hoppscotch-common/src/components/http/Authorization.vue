@@ -261,7 +261,7 @@ import { restAuth$, setRESTAuth } from "~/newstore/RESTSession"
 const t = useI18n()
 
 const colorMode = useColorMode()
-
+// 给auth赋值会触发setRESTAuth，进而触发dispatch，最终触发this.#state$.next(data)，订阅者会收到最新的值
 const auth = useStream(
   restAuth$,
   { authType: "none", authActive: true },
