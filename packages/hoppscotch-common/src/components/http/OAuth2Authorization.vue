@@ -52,7 +52,9 @@ export default defineComponent({
       { authType: "none", authActive: true },
       setRESTAuth
     )
-
+    /* Discovery定义了一个服务发现的规范，它定义了一个api（ /.well-known/openid-configuration ）
+    这个api返回一个json数据结构，其中包含了一些OIDC中提供的服务以及其支持情况的描述信息，
+    这样可以使得oidc服务的RP可以不再硬编码OIDC服务接口信息。 */
     const oidcDiscoveryURL = pluckRef(
       auth as Ref<HoppRESTAuthOAuth2>,
       "oidcDiscoveryURL"

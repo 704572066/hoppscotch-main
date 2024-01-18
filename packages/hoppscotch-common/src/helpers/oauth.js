@@ -3,7 +3,7 @@ import {
   setLocalConfig,
   removeLocalConfig,
 } from "~/newstore/localpersistence"
-
+// 属性返回 URL 的协议、主机名和端口号。
 const redirectUri = `${window.location.origin}/`
 
 // GENERAL HELPER FUNCTIONS
@@ -87,6 +87,7 @@ const getTokenConfiguration = async (endpoint) => {
 
 const generateRandomString = () => {
   const array = new Uint32Array(28)
+  // 生成随机数 ,此方法需要支持Web Crypto API的浏览器
   window.crypto.getRandomValues(array)
   return Array.from(array, (dec) => `0${dec.toString(16)}`.slice(-2)).join("")
 }
@@ -167,6 +168,8 @@ const tokenRequest = async ({
   setLocalConfig("client_secret", clientSecret)
 
   // Create and store a random state value
+  // PKCE 主要是为了减少公共客户端的授权码拦截攻击
+  // 客户端提供一个自创建的证明给授权服务器， 授权服务器通过它来验证客户端，把访问令牌(access_token) 颁发给真实的客户端而不是伪造的
   const state = generateRandomString()
   setLocalConfig("pkce_state", state)
 
