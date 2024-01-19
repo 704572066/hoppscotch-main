@@ -198,6 +198,7 @@
 import IconWrapText from "~icons/lucide/wrap-text"
 import IconFilter from "~icons/lucide/filter"
 import IconHelpCircle from "~icons/lucide/help-circle"
+//lossless-json：在解析 JSON 时不丢失数值信息 —— JSON.parse 可能会在处理大数值时出现问题，而这个库以一种轻量级的无损方式解析数值，将其保留为字符串而不是常规数值。
 import * as LJSON from "lossless-json"
 import * as O from "fp-ts/Option"
 import * as E from "fp-ts/Either"
