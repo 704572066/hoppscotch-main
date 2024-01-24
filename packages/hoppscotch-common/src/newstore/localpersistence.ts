@@ -146,6 +146,7 @@ function setupSettingsPersistence() {
 }
 
 function setupHistoryPersistence() {
+  // rest history 记录存储在浏览器本地
   const restHistoryData = JSON.parse(
     window.localStorage.getItem("history") || "[]"
   ).map(translateToNewRESTHistory)
