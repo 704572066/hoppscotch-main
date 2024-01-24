@@ -168,6 +168,7 @@ function setupHistoryPersistence() {
 }
 
 function setupCollectionsPersistence() {
+  // rest Collection 记录存储在浏览器本地
   const restCollectionData = JSON.parse(
     window.localStorage.getItem("collections") || "[]"
   ).map(translateToNewRESTCollection)
