@@ -22,7 +22,7 @@ import { startPageProgress, completePageProgress } from "@modules/loadingbar"
 import { GQLConnection } from "@helpers/GQLConnection"
 
 const t = useI18n()
-
+// 使用了computed属性，当t("navigation.graphql")值变化时，就会触发依赖的模版页面的显示变更
 usePageHead({
   title: computed(() => t("navigation.graphql")),
 })

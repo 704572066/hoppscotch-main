@@ -47,7 +47,7 @@ const url = useStream(gqlURL$, "", setGQLURL)
 const onConnectClick = () => {
   if (!connected.value) {
     props.conn.connect(url.value, headers.value as any)
-
+    // Firebase 分析日志事件
     logHoppRequestRunToAnalytics({
       platform: "graphql-schema",
       strategy: getCurrentStrategyID(),
